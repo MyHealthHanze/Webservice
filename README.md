@@ -1,6 +1,6 @@
 # Webservice
 
-Webservice made in Node.js for project MyHealth. The API is publicly accessible at [myhealth-hanze.herokuapp.com](myhealth-hanze.herokuapp.com)
+Webservice made in Node.js for project MyHealth. The API is publicly accessible at [https://myhealth-hanze.herokuapp.com](https://myhealth-hanze.herokuapp.com)
 
 ## Installation
 * Install [Node.js](https://nodejs.org/) and MySQL or MariaDB
