@@ -1,0 +1,32 @@
+{
+  "name": "myhealth-webservice",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MyHealthHanze/Webservice.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/MyHealthHanze/Webservice/issues"
+  },
+  "homepage": "https://github.com/MyHealthHanze/Webservice#readme",
+  "dependencies": {
+    "bcryptjs": "^2.2.1",
+    "body-parser": "^1.13.3",
+    "cors": "^2.7.1",
+    "express": "^4.13.3",
+    "fs": "0.0.2",
+    "jwt-simple": "^0.3.1",
+    "moment": "^2.10.6",
+    "morgan": "^1.6.1",
+    "mysql": "^2.9.0",
+    "path": "^0.12.7",
+    "sequelize": "^3.8.0",
+    "sequelize-cli": "^1.9.1"
+  }
+}
