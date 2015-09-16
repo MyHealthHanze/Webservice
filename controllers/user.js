@@ -5,7 +5,7 @@ var bcrypt = require('bcryptjs');
 var models = require('../models/index');
 var auth = require('../helpers/auth');
 
-var Users = models.users;
+var Users = models.Users;
 
 /**
  * Checks the user's credentials and supplies a token if credentials are valid
