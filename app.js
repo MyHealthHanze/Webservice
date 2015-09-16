@@ -3,7 +3,6 @@ var morgan = require('morgan');
 var cors = require('cors');
 var express = require('express');
 var path = require('path');
-var jwt = require('jsonwebtoken');
 
 var config = require('./config/settings');
 

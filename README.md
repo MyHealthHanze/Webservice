@@ -10,3 +10,8 @@
 * Run the migrations and seeds with ```sequelize db:migrate``` and ```sequelize db:seed```
 * Run the application by running the ```nodemon app.js``` command
 * Visit [http://localhost:1337/api/v1/](http://localhost:1337/api/v1/) to connect with the base API
+
+## Testing
+* The tests are located in the ```test``` folder
+* Install Mocha globally with ```npm install -g mocha```
+* You can run the tests with the ```mocha``` command

@@ -10,7 +10,7 @@ module.exports = {
 
     createToken: function(user) {
         var payload = {
-            exp: moment().add(180, 'minutes').unix(),
+            exp: moment().add(settings.tokenExpiresInMinutes, 'minutes').unix(),
             iat: moment().unix(),
             sub: user.id
         };
