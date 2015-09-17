@@ -4,11 +4,11 @@ var moment = require('moment');
 var settings = require('../config/settings');
 var models = require('../models/index');
 
-var Users = models.users;
+var Users = models.Users;
 
 module.exports = {
 
-    createToken: function(user) {
+    createToken: function (user) {
         var payload = {
             exp: moment().add(settings.tokenExpiresInMinutes, 'minutes').unix(),
             iat: moment().unix(),
@@ -18,7 +18,7 @@ module.exports = {
         return jwt.encode(payload, settings.secret);
     },
 
-    isAuthenticated: function(req, res, next) {
+    isAuthenticated: function (req, res, next) {
         if (!(req.headers && req.headers.authorization)) {
             return res.status(400).json({
                 error: 'You did not provide a JSON Web Token in the Authorization header.',
@@ -30,7 +30,7 @@ module.exports = {
         var token = header[1];
         try {
             var payload = jwt.decode(token, settings.secret);
-        } catch(err) {
+        } catch (err) {
             return res.status(401).json({
                 error: 'The JSON Web Token is not in a valid format',
                 result: ''
@@ -45,8 +45,8 @@ module.exports = {
             });
         }
 
-        Users.find({ where: { id: payload.sub}})
-            .then(function(user) {
+        Users.find({where: {id: payload.sub}})
+            .then(function (user) {
                 if (user == null) {
                     return res.status(400).json({
                         error: 'User no longer exists.',

@@ -5,7 +5,7 @@ var config = require('../config/settings');
 
 var url = config.baseUrl;
 
-describe('Login controller', function() {
+describe('Login controller', function () {
 
     describe('POST /user/login:', function () {
         var endpoint = 'user/login';

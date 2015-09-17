@@ -10,7 +10,7 @@ var Users = models.Users;
 /**
  * Checks the user's credentials and supplies a token if credentials are valid
  */
-router.post('/login', function(req, res) {
+router.post('/login', function (req, res) {
     // Check if the email and password are given
     if (req.body.email == undefined || req.body.password == undefined) {
         return res.status(401).json({
@@ -20,21 +20,21 @@ router.post('/login', function(req, res) {
     }
 
     // Try to find the user
-    Users.find({ where: { email: req.body.email }})
-        .then(function(user) {
+    Users.find({where: {email: req.body.email}})
+        .then(function (user) {
             if (!user) {
                 return res.status(401).json({
-                    error: { email: 'Incorrect email' },
+                    error: {email: 'Incorrect email'},
                     result: ''
                 });
             }
 
-            bcrypt.compare(req.body.password, user.password, function(err, isMatch) {
+            bcrypt.compare(req.body.password, user.password, function (err, isMatch) {
                 if (!isMatch) {
                     // TODO: Log the wrong password attempt
 
                     return res.status(401).json({
-                        error: { password: 'Incorrect password' },
+                        error: {password: 'Incorrect password'},
                         result: ''
                     });
                 }
@@ -53,6 +53,17 @@ router.post('/login', function(req, res) {
                 });
             });
         });
+});
+
+/**
+ * Route to get the
+ */
+router.get('/', auth.isAuthenticated, function(req, res) {
+    req.user.password = '';
+    return res.json({
+        error: '',
+        result: req.user
+    });
 });
 
 module.exports = router;
