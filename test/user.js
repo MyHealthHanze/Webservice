@@ -158,9 +158,6 @@ describe('Login controller', function () {
                     // Error object should not be empty
                     res.body.token.should.not.equal('');
 
-                    // Password should not be given in the response
-                    res.body.user.password.should.equal('');
-
                     done();
                 });
         });
