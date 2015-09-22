@@ -45,6 +45,7 @@ module.exports = {
             });
         }
 
+        // Check if user exists and is not disabled
         Users.find({where: {id: payload.sub}})
             .then(function (user) {
                 if (user == null) {
@@ -53,6 +54,9 @@ module.exports = {
                         result: ''
                     });
                 }
+
+                // Deletes the password from the user object
+                user['password'] = undefined;
 
                 req.user = user;
                 next();

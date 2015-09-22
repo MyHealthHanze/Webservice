@@ -8,7 +8,8 @@ module.exports = function (sequelize, DataTypes) {
         city: DataTypes.STRING,
         doctorId: DataTypes.INTEGER,
         disabled: DataTypes.BOOLEAN,
-        changedPassword: DataTypes.BOOLEAN
+        changedPassword: DataTypes.BOOLEAN,
+        amountOfFailedLoginAttempts: DataTypes.INTEGER
     });
 
     return Users;

@@ -3,6 +3,7 @@ var router = express.Router();
 var bcrypt = require('bcryptjs');
 
 var models = require('../models/index');
+var settings = require('../config/settings');
 var auth = require('../helpers/auth');
 
 var Users = models.Users;
@@ -22,44 +23,68 @@ router.post('/login', function (req, res) {
     // Try to find the user
     Users.find({where: {email: req.body.email}})
         .then(function (user) {
+            // Check if the user exists
             if (!user) {
                 return res.status(401).json({
-                    error: {email: 'Incorrect email'},
+                    error: 'Incorrect email',
+                    result: ''
+                });
+            }
+
+            // Check if the user has been disabled
+            if (user.disabled) {
+                return res.status(401).json({
+                    error: 'Your account has been disabled',
                     result: ''
                 });
             }
 
             bcrypt.compare(req.body.password, user.password, function (err, isMatch) {
                 if (!isMatch) {
-                    // TODO: Log the wrong password attempt
+                    // Update the amountOfFailedLoginAttempts when the login failed
+                    var newAmountOfFailedLoginAttempts = user.amountOfFailedLoginAttempts + 1;
+                    var accountIsDisabled = false;
+                    if (newAmountOfFailedLoginAttempts >= settings.numberOfAttemptsBeforeDisable) {
+                        accountIsDisabled = true;
+                    }
+
+                    Users.update({
+                        amountOfFailedLoginAttempts: newAmountOfFailedLoginAttempts,
+                        disabled: accountIsDisabled
+                    }, {
+                        where: { id: user.id }
+                    });
+
+                    var attemptsLeft = settings.numberOfAttemptsBeforeDisable - newAmountOfFailedLoginAttempts;
 
                     return res.status(401).json({
-                        error: {password: 'Incorrect password'},
+                        error: 'Incorrect password, ' + attemptsLeft + ' attempts left.',
                         result: ''
                     });
                 }
 
-                // TODO: Check if the user account is disabled
-
-                // TODO: Check if its the users first login
-
-                user.password = '';
+                user['password'] = undefined;
 
                 var token = auth.createToken(user);
 
-                return res.json({
+                var response = {
                     token: token,
                     user: user
-                });
+                };
+
+                if (!user.changedPassword) {
+                    response.changePassword = true;
+                }
+
+                return res.json(response);
             });
         });
 });
 
 /**
- * Route to get the
+ * Route to get the current user object
  */
 router.get('/', auth.isAuthenticated, function(req, res) {
-    req.user.password = '';
     return res.json({
         error: '',
         result: req.user

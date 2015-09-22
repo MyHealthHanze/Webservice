@@ -2,11 +2,11 @@
 
 module.exports = {
   up: function (queryInterface, Sequelize) {
-    createUsersObject('John Bakker', 'johnbakker@gmail.com', 'test', queryInterface);
-    createUsersObject('Pieter-Jan van Bolgeren', 'pieterjan@gmail.com', 'test', queryInterface);
-    createUsersObject('Hermiena Driessen', 'hermienadriessen@gmail.com', 'test', queryInterface);
-    createUsersObject('Gert Pluim', 'gertpluim@gmail.com', 'test', queryInterface);
-    createUsersObject('Melissa Teunissen', 'melissateunissen@gmail.com', 'test', queryInterface);
+    createUsersObject('John Bakker', 'johnbakker@gmail.com', 'test', 0, queryInterface);
+    createUsersObject('Pieter-Jan van Bolgeren', 'pieterjan@gmail.com', 'test', 1, queryInterface);
+    createUsersObject('Hermiena Driessen', 'hermienadriessen@gmail.com', 'test', 0, queryInterface);
+    createUsersObject('Gert Pluim', 'gertpluim@gmail.com', 'test', 0, queryInterface);
+    createUsersObject('Melissa Teunissen', 'melissateunissen@gmail.com', 'test', 0, queryInterface);
   },
 
   down: function (queryInterface, Sequelize) {
@@ -14,7 +14,7 @@ module.exports = {
   }
 };
 
-function createUsersObject(name, email, password, queryInterface) {
+function createUsersObject(name, email, password, disabled, queryInterface) {
   var bcrypt = require('bcryptjs');
 
   bcrypt.genSalt(10, function (err, salt) {
@@ -26,8 +26,9 @@ function createUsersObject(name, email, password, queryInterface) {
         address: 'Zernikeplein 11',
         city: 'Groningen',
         doctorId: 1,
-        disabled: 0,
-        changedPassword: 1
+        disabled: disabled,
+        changedPassword: 1,
+        amountOfFailedLoginAttempts: 0
       }], {});
     });
   });

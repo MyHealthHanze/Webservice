@@ -4,8 +4,31 @@ var request = require('supertest');
 var config = require('../config/settings');
 
 var url = config.baseUrl;
+var jwtToken = undefined;
 
 describe('Login controller', function () {
+
+    before(function (done) {
+        var endpoint = 'user/login';
+
+        var user = {
+            email: 'johnbakker@gmail.com',
+            password: 'test'
+        };
+        request(url)
+            .post(endpoint)
+            .send(user)
+            // end handles the response
+            .end(function (err, res) {
+                if (err) {
+                    throw err;
+                }
+
+                jwtToken = res.body.token;
+
+                done();
+            });
+    });
 
     describe('POST /user/login:', function () {
         var endpoint = 'user/login';
@@ -137,6 +160,31 @@ describe('Login controller', function () {
 
                     // Password should not be given in the response
                     res.body.user.password.should.equal('');
+
+                    done();
+                });
+        });
+
+        it('should return an error when trying to login with a disabled account', function (done) {
+            var body = {
+                email: 'pieterjan@gmail.com',
+                password: 'test'
+            };
+            request(url)
+                .post(endpoint)
+                .send(body)
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // Status code should match with 401
+                    res.status.should.equal(401);
+
+                    // Error object should be present
+                    should.exist(res.body.error);
+
+                    // Error object should not be empty
+                    res.body.error.should.not.equal('');
 
                     done();
                 });

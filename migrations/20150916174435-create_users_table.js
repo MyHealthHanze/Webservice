@@ -31,6 +31,10 @@ module.exports = {
                     type: Sequelize.BOOLEAN,
                     defaultValue: false,
                     allowNull: false
+                },
+                amountOfFailedLoginAttempts: {
+                    type: Sequelize.INTEGER,
+                    defaultValue: 0
                 }
             },
             {
