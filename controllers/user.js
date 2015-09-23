@@ -63,8 +63,20 @@ router.post('/login', function (req, res) {
                     });
                 }
 
+                // Reset the amountOfFailedLoginAttempts when the user has that attribute set
+                if (user.amountOfFailedLoginAttempts > 0) {
+                    Users.update({
+                        amountOfFailedLoginAttempts: 0,
+                        disabled: 0
+                    }, {
+                        where: { id: user.id }
+                    });
+                }
+
+                // Unset the password so users don't get to see it
                 user['password'] = undefined;
 
+                // Create a JSON Web Token
                 var token = auth.createToken(user);
 
                 var response = {
