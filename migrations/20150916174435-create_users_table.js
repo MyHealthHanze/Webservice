@@ -11,12 +11,10 @@ module.exports = {
                     autoIncrement: true
                 },
                 createdAt: {
-                    type: Sequelize.DATE,
-                    defaultValue: Sequelize.NOW
+                    type: Sequelize.DATE
                 },
                 updatedAt: {
-                    type: Sequelize.DATE,
-                    defaultValue: Sequelize.NOW
+                    type: Sequelize.DATE
                 },
                 name: Sequelize.STRING,
                 email: Sequelize.STRING,
