@@ -9,7 +9,8 @@ module.exports = function (sequelize, DataTypes) {
         doctorId: DataTypes.INTEGER,
         disabled: DataTypes.BOOLEAN,
         changedPassword: DataTypes.BOOLEAN,
-        amountOfFailedLoginAttempts: DataTypes.INTEGER
+        amountOfFailedLoginAttempts: DataTypes.INTEGER,
+        disabledOn: DataTypes.DATE
     });
 
     return Users;

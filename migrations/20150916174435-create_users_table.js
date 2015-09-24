@@ -37,6 +37,10 @@ module.exports = {
                 amountOfFailedLoginAttempts: {
                     type: Sequelize.INTEGER,
                     defaultValue: 0
+                },
+                disabledOn: {
+                    type: Sequelize.DATE,
+                    defaultValue: null
                 }
             },
             {

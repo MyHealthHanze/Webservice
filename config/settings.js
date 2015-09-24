@@ -5,6 +5,7 @@ module.exports = {
     baseUrl: process.env.baseUrl || 'http://localhost:1337/api/v1/',
     secret: process.env.secret || 'Svj5HeJNAW2E3o2nAuOgEaUx',
     tokenExpiresInMinutes: process.env.tokenExpiresInMinutes || 180,
-    numberOfAttemptsBeforeDisable: process.env.numberOfAttemptsBeforeDisable || 4
+    numberOfAttemptsBeforeDisable: process.env.numberOfAttemptsBeforeDisable || 4,
+    timeAccountDisabled: process.env.timeAccountDisabled || 15
 
 };

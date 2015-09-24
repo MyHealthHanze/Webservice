@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var bcrypt = require('bcryptjs');
+var moment = require('moment');
 
 var models = require('../models/index');
 var settings = require('../config/settings');
@@ -31,8 +32,12 @@ router.post('/login', function (req, res) {
                 });
             }
 
+            var currentTime = moment().utc().format("YYYY-MM-DD HH:mm:ss");
+
+            var disabledOn = moment(user.disabledOn).utc().add(settings.timeAccountDisabled, 'minutes').format("YYYY-MM-DD HH:mm:ss");
+
             // Check if the user has been disabled
-            if (user.disabled) {
+            if (user.disabled && disabledOn >= currentTime) {
                 return res.status(401).json({
                     error: 'Your account has been disabled',
                     result: ''
@@ -44,21 +49,28 @@ router.post('/login', function (req, res) {
                     // Update the amountOfFailedLoginAttempts when the login failed
                     var newAmountOfFailedLoginAttempts = user.amountOfFailedLoginAttempts + 1;
                     var accountIsDisabled = false;
+                    var disabledOn = undefined;
                     if (newAmountOfFailedLoginAttempts >= settings.numberOfAttemptsBeforeDisable) {
                         accountIsDisabled = true;
+                        disabledOn = moment().format("YYYY-MM-DD HH:mm:ss");
                     }
 
-                    Users.update({
+                    var updatedUser = {
                         amountOfFailedLoginAttempts: newAmountOfFailedLoginAttempts,
                         disabled: accountIsDisabled
-                    }, {
+                    };
+
+                    if (accountIsDisabled) {
+                        updatedUser.disabledOn = disabledOn
+                    }
+
+                    // Update the user object with the amountOfFailedLoginAttempts or disabled(On)
+                    Users.update(updatedUser, {
                         where: { id: user.id }
                     });
 
-                    var attemptsLeft = settings.numberOfAttemptsBeforeDisable - newAmountOfFailedLoginAttempts;
-
                     return res.status(401).json({
-                        error: 'Incorrect password, ' + attemptsLeft + ' attempts left.',
+                        error: 'Incorrect password, limited login attempts left.',
                         result: ''
                     });
                 }
@@ -67,7 +79,8 @@ router.post('/login', function (req, res) {
                 if (user.amountOfFailedLoginAttempts > 0) {
                     Users.update({
                         amountOfFailedLoginAttempts: 0,
-                        disabled: 0
+                        disabled: 0,
+                        disabledOn: null
                     }, {
                         where: { id: user.id }
                     });
