@@ -7,7 +7,6 @@ module.exports = function (sequelize, DataTypes) {
         address: DataTypes.STRING,
         city: DataTypes.STRING,
         doctorId: DataTypes.INTEGER,
-        disabled: DataTypes.BOOLEAN,
         changedPassword: DataTypes.BOOLEAN,
         amountOfFailedLoginAttempts: DataTypes.INTEGER,
         disabledOn: DataTypes.DATE

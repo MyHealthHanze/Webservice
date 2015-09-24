@@ -24,11 +24,6 @@ module.exports = {
                 address: Sequelize.STRING,
                 city: Sequelize.STRING,
                 doctorId: Sequelize.INTEGER,
-                disabled: {
-                    type: Sequelize.BOOLEAN,
-                    defaultValue: false,
-                    allowNull: false
-                },
                 changedPassword: {
                     type: Sequelize.BOOLEAN,
                     defaultValue: false,

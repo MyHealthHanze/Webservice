@@ -6,6 +6,7 @@
   "scripts": {
     "test": "mocha",
     "preinstall": "sequelize db:seed:undo --config config/config.js && sequelize db:migrate:undo --config config/config.js && sequelize db:migrate --config config/config.js && sequelize db:seed --config config/config.js",
+    "pretest": "sequelize db:seed:undo --config config/config.js && sequelize db:migrate:undo --config config/config.js && sequelize db:migrate --config config/config.js && sequelize db:seed --config config/config.js",
     "start": "node app.js"
   },
   "repository": {
