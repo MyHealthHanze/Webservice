@@ -150,9 +150,10 @@ router.put('/password', auth.isAuthenticated, function (req, res) {
                 bcrypt.genSalt(10, function (err, salt) {
                     bcrypt.hash(newPassword, salt, function (err, hash) {
 
-                        // Update the users password
+                        // Update the users password and updates changedPassword
                         Users.update({
-                            password: hash
+                            password: hash,
+                            changedPassword: true
                         }, {
                             where: {id: user.id}
                         }).then(function () {
