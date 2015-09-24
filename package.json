@@ -5,8 +5,9 @@
   "main": "app.js",
   "scripts": {
     "test": "mocha",
+    "postinstall": "sequelize db:seed:undo --config config/config.js && sequelize db:migrate:undo --config config/config.js && sequelize db:migrate --config config/config.js && sequelize db:seed --config config/config.js",
     "pretest": "sequelize db:seed:undo --config config/config.js && sequelize db:migrate:undo --config config/config.js && sequelize db:migrate --config config/config.js && sequelize db:seed --config config/config.js",
-    "start": "sequelize db:seed:undo --config config/config.js && sequelize db:migrate:undo --config config/config.js && sequelize db:migrate --config config/config.js && sequelize db:seed --config config/config.js && node app.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
