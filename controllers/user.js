@@ -37,7 +37,7 @@ router.post('/login', function (req, res) {
             var disabledOn = moment(user.disabledOn).utc().add(settings.timeAccountDisabled, 'minutes').format("YYYY-MM-DD HH:mm:ss");
 
             // Check if the user has been disabled
-            if (user.disabled && disabledOn >= currentTime) {
+            if (user.disabledOn != null && user.disabled && disabledOn >= currentTime) {
                 return res.status(401).json({
                     error: 'Your account has been disabled',
                     result: ''
