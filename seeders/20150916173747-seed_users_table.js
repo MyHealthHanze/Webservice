@@ -4,11 +4,11 @@ var moment = require('moment');
 
 module.exports = {
     up: function (queryInterface, Sequelize) {
-        createUsersObject('John Bakker', 'johnbakker@gmail.com', 'test', 0, queryInterface, null);
-        createUsersObject('Pieter-Jan van Bolgeren', 'pieterjan@gmail.com', 'test', 1, queryInterface, moment().utc().add(1, 'years').format("YYYY-MM-DD HH:mm:ss"));
-        createUsersObject('Hermiena Driessen', 'hermienadriessen@gmail.com', 'test', 0, queryInterface, null);
-        createUsersObject('Gert Pluim', 'gertpluim@gmail.com', 'test', 0, queryInterface, null);
-        createUsersObject('Melissa Teunissen', 'melissateunissen@gmail.com', 'test', 0, queryInterface, null);
+        createUsersObject('John Bakker', 'johnbakker@gmail.com', 'test', false, queryInterface, null);
+        createUsersObject('Pieter-Jan van Bolgeren', 'pieterjan@gmail.com', 'test', true, queryInterface, moment().utc().add(1, 'years').format("YYYY-MM-DD HH:mm:ss"));
+        createUsersObject('Hermiena Driessen', 'hermienadriessen@gmail.com', 'test', false, queryInterface, null);
+        createUsersObject('Gert Pluim', 'gertpluim@gmail.com', 'test', false, queryInterface, null);
+        createUsersObject('Melissa Teunissen', 'melissateunissen@gmail.com', 'test', false, queryInterface, null);
     },
 
     down: function (queryInterface, Sequelize) {
