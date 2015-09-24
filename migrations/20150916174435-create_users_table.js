@@ -23,7 +23,11 @@ module.exports = {
                 password: Sequelize.STRING,
                 address: Sequelize.STRING,
                 city: Sequelize.STRING,
-                doctorId: Sequelize.INTEGER,
+                doctorId: {
+                    type :Sequelize.INTEGER,
+                    references: 'Docters',
+                    referenceKey: 'id'
+                },
                 changedPassword: {
                     type: Sequelize.BOOLEAN,
                     defaultValue: false,
