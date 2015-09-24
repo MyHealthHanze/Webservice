@@ -2,7 +2,7 @@ module.exports = {
 
     "development": {
         "username": process.env.sqlUsername || "root",
-        "password": process.env.sqlPassword ||  null,
+        "password": process.env.sqlPassword ||  "usbw",
         "database": process.env.sqlDatabase || "myhealth",
         "host": process.env.sqlHost || "127.0.0.1",
         "dialect": "mysql"
