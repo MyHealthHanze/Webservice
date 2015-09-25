@@ -34,7 +34,7 @@ router.get('/', auth.isAuthenticated, function (req, res) {
 });
 
 /**
- * Creates a measurement of blood pressure values
+ * Creates a measurement of pulse values
  *
  * TODO: Define the specific fields for every measurement
  */
