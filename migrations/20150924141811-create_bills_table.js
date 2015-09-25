@@ -12,17 +12,13 @@ module.exports = {
           },
           createdAt: {
             type: Sequelize.DATE,
-            defaultValue: Sequelize.fn('NOW')
+            defaultValue: null // Should be Sequelize.fn('NOW')
           },
           updatedAt: {
             type: Sequelize.DATE,
-            defaultValue: Sequelize.fn('NOW')
+            defaultValue: null // Should be Sequelize.fn('NOW')
           },
-          userId: {
-            type: Sequelize.INTEGER,
-            references: 'Users',
-            referenceKey: 'id'
-          },
+          userId: Sequelize.INTEGER,
           healthCareId: Sequelize.INTEGER,
           billState: {
             type: Sequelize.ENUM,

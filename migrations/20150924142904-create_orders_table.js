@@ -12,19 +12,13 @@ module.exports = {
           },
           createdAt: {
             type: Sequelize.DATE,
-            defaultValue: Sequelize.fn('NOW')
+            defaultValue: null // Should be Sequelize.fn('NOW')
           },
           updatedAt: {
             type: Sequelize.DATE,
-            defaultValue: Sequelize.fn('NOW')
+            defaultValue: null
           },
-          billId: {
-            type: Sequelize.INTEGER,
-            references: {
-              model: 'Bills',
-              key: 'id'
-            }
-          },
+          billId: Sequelize.INTEGER,
           description: Sequelize.STRING,
           code: Sequelize.STRING,
           price: Sequelize.FLOAT

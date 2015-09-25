@@ -12,22 +12,18 @@ module.exports = {
                 },
                 createdAt: {
                     type: Sequelize.DATE,
-                    defaultValue: null
+                    defaultValue: null // Should be Sequelize.fn('NOW')
                 },
                 updatedAt: {
                     type: Sequelize.DATE,
-                    defaultValue: null
+                    defaultValue: null // Should be Sequelize.fn('NOW')
                 },
                 name: Sequelize.STRING,
                 email: Sequelize.STRING,
                 password: Sequelize.STRING,
                 address: Sequelize.STRING,
                 city: Sequelize.STRING,
-                doctorId: {
-                    type: Sequelize.INTEGER,
-                    references: 'Docters',
-                    referenceKey: 'id'
-                },
+                doctorId: Sequelize.INTEGER,
                 changedPassword: {
                     type: Sequelize.BOOLEAN,
                     defaultValue: false,
