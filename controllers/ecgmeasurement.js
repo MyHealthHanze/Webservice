@@ -13,7 +13,7 @@ var ECGMeasurements = models.ECGMeasurements;
  */
 router.get('/', auth.isAuthenticated, function (req, res) {
     ECGMeasurements
-        .find({
+        .findAll({
             where: {
                 userId: req.user.id
             }

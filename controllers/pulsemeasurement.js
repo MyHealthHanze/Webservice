@@ -13,7 +13,7 @@ var PulseMeasurements = models.PulseMeasurements;
  */
 router.get('/', auth.isAuthenticated, function (req, res) {
     PulseMeasurements
-        .find({
+        .findAll({
             where: {
                 userId: req.user.id
             }

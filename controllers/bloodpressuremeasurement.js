@@ -13,7 +13,7 @@ var BloodPressureMeasurements = models.BloodPressureMeasurements;
  */
 router.get('/', auth.isAuthenticated, function (req, res) {
     BloodPressureMeasurements
-        .find({
+        .findAll({
             where: {
                 userId: req.user.id
             }
