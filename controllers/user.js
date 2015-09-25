@@ -63,7 +63,7 @@ router.post('/login', function (req, res) {
 
                     // Update the user object with the amountOfFailedLoginAttempts or disabled(On)
                     Users.update(updatedUser, {
-                        where: { id: user.id }
+                        where: {id: user.id}
                     });
 
                     return res.status(401).json({
@@ -78,7 +78,7 @@ router.post('/login', function (req, res) {
                         amountOfFailedLoginAttempts: 0,
                         disabledOn: null
                     }, {
-                        where: { id: user.id }
+                        where: {id: user.id}
                     });
                 }
 
@@ -105,11 +105,67 @@ router.post('/login', function (req, res) {
 /**
  * Route to get the current user object
  */
-router.get('/', auth.isAuthenticated, function(req, res) {
+router.get('/', auth.isAuthenticated, function (req, res) {
     return res.json({
         error: '',
         result: req.user
     });
+});
+
+/**
+ * Route to change the current users password
+ */
+router.put('/password', auth.isAuthenticated, function (req, res) {
+    var oldPassword = req.body.old_password;
+    var newPassword = req.body.new_password;
+
+    // One or both passwords hasn't been supplied
+    if (oldPassword == undefined || newPassword == undefined) {
+        return res.status(401).json({
+            error: 'Invalid passwords',
+            result: ''
+        });
+    }
+
+    // Try to find the user
+    Users.find({where: {id: req.user.id}})
+        .then(function (user) {
+            if (!user) {
+                return res.status(401).json({
+                    error: 'You are not logged in!',
+                    result: ''
+                });
+            }
+
+            // Check if the given password is equal to the current password
+            bcrypt.compare(oldPassword, user.password, function (err, isMatch) {
+                if (!isMatch) {
+                    return res.status(401).json({
+                        error: 'Your old password does not match!',
+                        result: ''
+                    });
+                }
+
+                // Create a new password with bcrypt
+                bcrypt.genSalt(10, function (err, salt) {
+                    bcrypt.hash(newPassword, salt, function (err, hash) {
+
+                        // Update the users password and updates changedPassword
+                        Users.update({
+                            password: hash,
+                            changedPassword: true
+                        }, {
+                            where: {id: user.id}
+                        }).then(function () {
+                            return res.json({
+                                error: '',
+                                result: 'Your password has been changed!'
+                            });
+                        });
+                    });
+                });
+            });
+        });
 });
 
 module.exports = router;

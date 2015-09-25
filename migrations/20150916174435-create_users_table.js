@@ -12,11 +12,11 @@ module.exports = {
                 },
                 createdAt: {
                     type: Sequelize.DATE,
-                    defaultValue: Sequelize.fn('NOW')
+                    defaultValue: null
                 },
                 updatedAt: {
                     type: Sequelize.DATE,
-                    defaultValue: Sequelize.fn('NOW')
+                    defaultValue: null
                 },
                 name: Sequelize.STRING,
                 email: Sequelize.STRING,
