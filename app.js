@@ -21,9 +21,15 @@ app.use(express.static(path.join(__dirname)));
 
 // Controllers
 var user = require('./controllers/user');
+var bloodpressure = require('./controllers/bloodpressuremeasurement');
+var ecg = require('./controllers/ecgmeasurement');
+var pulse = require('./controllers/pulsemeasurement');
 
 // Routing
 app.use(config.apiUrl + 'user', user);
+app.use(config.apiUrl + 'measurement/bloodpressure', bloodpressure);
+app.use(config.apiUrl + 'measurement/ecg', ecg);
+app.use(config.apiUrl + 'measurement/pulse', pulse);
 
 // Run the Express server
 app.listen(app.get('port'), function () {
