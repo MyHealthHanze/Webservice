@@ -12,11 +12,11 @@ module.exports = {
                 },
                 createdAt: {
                     type: Sequelize.DATE,
-                    defaultValue: null
+                    defaultValue: null // Should be Sequelize.fn('NOW')
                 },
                 updatedAt: {
                     type: Sequelize.DATE,
-                    defaultValue: null
+                    defaultValue: null // Should be Sequelize.fn('NOW')
                 },
                 name: Sequelize.STRING,
                 email: Sequelize.STRING,
@@ -46,6 +46,6 @@ module.exports = {
     },
 
     down: function (queryInterface, Sequelize) {
-        return queryInterface.dropTable('users');
+        return queryInterface.dropTable('Users');
     }
 };
