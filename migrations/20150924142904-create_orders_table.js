@@ -20,8 +20,10 @@ module.exports = {
           },
           billId: {
             type: Sequelize.INTEGER,
-            references: 'Bills',
-            referenceKey: 'id'
+            references: {
+              model: 'Bills',
+              key: 'id'
+            }
           },
           description: Sequelize.STRING,
           code: Sequelize.STRING,

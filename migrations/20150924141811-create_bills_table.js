@@ -24,7 +24,10 @@ module.exports = {
             referenceKey: 'id'
           },
           healthCareId: Sequelize.INTEGER,
-          billState: Sequelize.ENUM
+          billState: {
+            type: Sequelize.ENUM,
+            values: ['pending', 'payed']
+          }
         },
         {
           engine: 'InnoDB',
