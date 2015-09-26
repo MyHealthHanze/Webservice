@@ -1,4 +1,4 @@
-module.exports = {
+var settings = {
 
     apiUrl: process.env.apiUrl || '/api/v1/',
     appPort: process.env.PORT || 1337,
@@ -9,3 +9,5 @@ module.exports = {
     timeAccountDisabled: process.env.timeAccountDisabled || 15
 
 };
+
+export default settings;
