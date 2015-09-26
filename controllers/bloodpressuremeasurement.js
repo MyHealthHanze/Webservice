@@ -1,8 +1,9 @@
-var express = require('express');
+import express from 'express';
 var router = express.Router();
 
-var models = require('../models/index');
-var auth = require('../helpers/auth');
+import models from '../models/index';
+import auth from '../helpers/auth';
+import response from '../helpers/response';
 
 var BloodPressureMeasurements = models.BloodPressureMeasurements;
 
@@ -11,25 +12,15 @@ var BloodPressureMeasurements = models.BloodPressureMeasurements;
  *
  * TODO: needs to be refined how much/what information we want to send
  */
-router.get('/', auth.isAuthenticated, function (req, res) {
+router.get('/', auth.isAuthenticated, (req, res) => {
     BloodPressureMeasurements
         .findAll({
             where: {
                 userId: req.user.id
             }
         })
-        .then(function (measurements) {
-            if (measurements == null) {
-                return res.status(401).json({
-                    error: 'No blood pressure measurements are available!',
-                    result: ''
-                });
-            }
-
-            return res.json({
-                error: '',
-                result: measurements
-            })
+        .then((measurements) => {
+            return response('', measurements, res);
         });
 });
 
@@ -38,15 +29,12 @@ router.get('/', auth.isAuthenticated, function (req, res) {
  *
  * TODO: Define the specific fields for every measurement
  */
-router.post('/', auth.isAuthenticated, function (req, res) {
+router.post('/', auth.isAuthenticated, (req, res) => {
     BloodPressureMeasurements
         .create(req.body)
-        .then(function () {
-            return res.json({
-                error: '',
-                result: 'The blood pressure measurements have been uploaded.'
-            });
+        .then(() => {
+            return response('', 'The blood pressure measurements have been uploaded.', res);
         });
 });
 
-module.exports = router;
+export default router;

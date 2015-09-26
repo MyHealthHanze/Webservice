@@ -186,6 +186,26 @@ describe('Login controller', function () {
                     done();
                 });
         });
+
+        it('should return an changePassword response on first login ', function (done) {
+            var body = {
+                email: 'johnbakker@gmail.com',
+                password: 'test'
+            };
+            request(url)
+                .post(endpoint)
+                .send(body)
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    // Error object should be present
+                    should.exist(res.body.changePassword);
+
+                    done();
+                });
+        });
     });
 
 });

@@ -1,12 +1,13 @@
 {
   "name": "myhealth-webservice",
-  "version": "0.2",
+  "version": "0.2.0",
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --compilers js:babel/register",
     "pretest": "sequelize db:seed:undo:all --config config/config.js && sequelize db:migrate:undo:all --config config/config.js && sequelize db:migrate --config config/config.js && sequelize db:seed --config config/config.js",
-    "start": "sequelize db:seed:undo:all --config config/config.js && sequelize db:migrate:undo:all --config config/config.js && sequelize db:migrate --config config/config.js && sequelize db:seed --config config/config.js && node app.js"
+    "start": "sequelize db:seed:undo:all --config config/config.js && sequelize db:migrate:undo:all --config config/config.js && sequelize db:migrate --config config/config.js && sequelize db:seed --config config/config.js && babel-node app.js",
+    "watch": "nodemon --exec babel-node -- app.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   "homepage": "https://github.com/MyHealthHanze/Webservice#readme",
   "dependencies": {
     "assert": "^1.3.0",
+    "babel": "^5.8.23",
     "bcryptjs": "^2.2.1",
     "body-parser": "^1.13.3",
     "cors": "^2.7.1",
