@@ -4,31 +4,8 @@ var request = require('supertest');
 var config = require('../config/settings');
 
 var url = config.baseUrl;
-var jwtToken = undefined;
 
 describe('Login controller', function () {
-
-    before(function (done) {
-        var endpoint = 'user/login';
-
-        var user = {
-            email: 'johnbakker@gmail.com',
-            password: 'test'
-        };
-        request(url)
-            .post(endpoint)
-            .send(user)
-            // end handles the response
-            .end(function (err, res) {
-                if (err) {
-                    throw err;
-                }
-
-                jwtToken = res.body.token;
-
-                done();
-            });
-    });
 
     describe('POST /user/login:', function () {
         var endpoint = 'user/login';
