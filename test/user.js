@@ -4,8 +4,31 @@ var request = require('supertest');
 var config = require('../config/settings');
 
 var url = config.baseUrl;
+var jwtToken = undefined;
 
 describe('Login controller', function () {
+
+    before(function (done) {
+        var endpoint = 'user/login';
+
+        var user = {
+            email: 'johnbakker@gmail.com',
+            password: 'test'
+        };
+        request(url)
+            .post(endpoint)
+            .send(user)
+            // end handles the response
+            .end(function (err, res) {
+                if (err) {
+                    throw err;
+                }
+
+                jwtToken = res.body.token;
+
+                done();
+            });
+    });
 
     describe('POST /user/login:', function () {
         var endpoint = 'user/login';
@@ -183,6 +206,138 @@ describe('Login controller', function () {
                     done();
                 });
         });
+    });
+
+    describe('POST /user/password:', function () {
+        var endpoint = 'user/password';
+
+        it('should return error trying to login without input', function (done) {
+            request(url)
+                .put(endpoint)
+                .set('Authorization', 'Bearer ' + jwtToken)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    // Status code should match with 401 (Unauthorized)
+                    res.status.should.equal(401);
+
+                    // Error object should be present
+                    should.exist(res.body.error);
+
+                    // Error object should not be empty
+                    res.body.error.should.not.equal('');
+
+                    done();
+                });
+        });
+
+        it('should return error trying to login with wrong password', function (done) {
+            var passwords = {
+                old_password: 'testwrongpassword',
+                new_password: 'test'
+            };
+
+            request(url)
+                .put(endpoint)
+                .set('Authorization', 'Bearer ' + jwtToken)
+                .send(passwords)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // Status code should match with 401 (Unauthorized)
+                    res.status.should.equal(401);
+
+                    // Error object should be present
+                    should.exist(res.body.error);
+
+                    // Error object should not be empty
+                    res.body.error.should.not.equal('');
+
+                    done();
+                });
+        });
+
+        it('should return success when changing password with valid credentials', function (done) {
+            var passwords = {
+                old_password: 'test',
+                new_password: 'test123'
+            };
+
+            // Try to change to password from test to test123
+            request(url)
+                .put(endpoint)
+                .set('Authorization', 'Bearer ' + jwtToken)
+                .send(passwords)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // Status code should match with 200
+                    res.status.should.equal(200);
+
+                    // Result object should be present
+                    should.exist(res.body.result);
+
+                    // Result object should not be empty
+                    res.body.result.should.not.equal('');
+
+                    // Test if the password has actually changed
+                    request(url)
+                        .post('user/login')
+                        .send({
+                            email: 'johnbakker@gmail.com',
+                            password: 'test123'
+                        })
+                        // end handles the response
+                        .end(function (err, res) {
+                            if (err) {
+                                throw err;
+                            }
+                            // Status code should match with 401 (Unauthorized)
+                            res.status.should.equal(200);
+
+                            // Token object should be present
+                            should.exist(res.body.token);
+
+                            // Token object should not be empty
+                            res.body.token.should.not.equal('');
+
+                            var passwords = {
+                                old_password: 'test123',
+                                new_password: 'test'
+                            };
+
+                            // Change the password back to test
+                            request(url)
+                                .put(endpoint)
+                                .set('Authorization', 'Bearer ' + jwtToken)
+                                .send(passwords)
+                                // end handles the response
+                                .end(function (err, res) {
+                                    if (err) {
+                                        throw err;
+                                    }
+                                    // Status code should match with 200
+                                    res.status.should.equal(200);
+
+                                    // Result object should be present
+                                    should.exist(res.body.result);
+
+                                    // Result object should not be empty
+                                    res.body.result.should.not.equal('');
+
+                                    done();
+                                });
+                        });
+                });
+        });
+
     });
 
 });

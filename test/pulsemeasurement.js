@@ -6,7 +6,7 @@ var config = require('../config/settings');
 var url = config.baseUrl;
 var jwtToken = undefined;
 
-describe('ECG measurement controller', function () {
+describe('Pulse measurement controller', function () {
 
     before(function (done) {
         var endpoint = 'user/login';
@@ -30,8 +30,8 @@ describe('ECG measurement controller', function () {
             });
     });
 
-    describe('GET /measurement/ecg:', function () {
-        var endpoint = 'measurement/ecg';
+    describe('GET /measurement/pulse:', function () {
+        var endpoint = 'measurement/pulse';
 
         it('should return an array with one item', function (done) {
             request(url)
@@ -66,8 +66,8 @@ describe('ECG measurement controller', function () {
 
     });
 
-    describe('POST /measurement/ecg:', function () {
-        var endpoint = 'measurement/ecg';
+    describe('POST /measurement/pulse:', function () {
+        var endpoint = 'measurement/pulse';
 
         before(function (done2) {
             var measurement = {

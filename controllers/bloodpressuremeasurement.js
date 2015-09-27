@@ -30,6 +30,9 @@ router.get('/', auth.isAuthenticated, (req, res) => {
  * TODO: Define the specific fields for every measurement
  */
 router.post('/', auth.isAuthenticated, (req, res) => {
+    // Set the userId to the current user
+    req.body.userId = req.user.id;
+
     BloodPressureMeasurements
         .create(req.body)
         .then(() => {
