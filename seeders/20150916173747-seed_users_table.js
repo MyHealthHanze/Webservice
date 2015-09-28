@@ -18,9 +18,9 @@ function createUsersObjects(queryInterface, password) {
     bcrypt.genSalt(10, function (err, salt) {
         bcrypt.hash(password, salt, function (err, hash) {
             createUsersObject('John Bakker', 'johnbakker@gmail.com', hash, false, queryInterface, null);
-            createUsersObject('Pieter-Jan van Bolgeren', 'pieterjan@gmail.com', hash, true, queryInterface, moment().utc().add(1, 'years').format("YYYY-MM-DD HH:mm:ss"));
+            createUsersObject('Pieter-Jan van Bolgeren', 'pieterjan@gmail.com', hash, false, queryInterface, moment().utc().add(1, 'years').format("YYYY-MM-DD HH:mm:ss"));
             createUsersObject('Hermiena Driessen', 'hermienadriessen@gmail.com', hash, false, queryInterface, null);
-            createUsersObject('Gert Pluim', 'gertpluim@gmail.com', hash, false, queryInterface, null);
+            createUsersObject('Gert Pluim', 'gertpluim@gmail.com', hash, true, queryInterface, null);
             createUsersObject('Melissa Teunissen', 'melissateunissen@gmail.com', hash, false, queryInterface, null);
         });
     });

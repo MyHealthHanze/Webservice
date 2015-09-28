@@ -30,10 +30,25 @@ router.get('/', auth.isAuthenticated, (req, res) => {
  * TODO: Define the specific fields for every measurement
  */
 router.post('/', auth.isAuthenticated, (req, res) => {
+    // Set the userId to the current user
+    req.body.userId = req.user.id;
+    // Delete the id to prevent errors
+    req.body['id'] = undefined;
+
+    // Create the pulse measurement and return the inserted id
     PulseMeasurements
-        .create(req.body)
-        .then(() => {
-            return response('', 'The pulse measurements have been uploaded.', res);
+        .create(req.body, {
+            plain: true,
+            raw: true
+        })
+        .then((inserted) => {
+            // Build an object with callback ids
+            var ids = {
+                local_id: req.body.local_id,
+                online_id: inserted.id
+            };
+
+            return response('', ids, res);
         });
 });
 
