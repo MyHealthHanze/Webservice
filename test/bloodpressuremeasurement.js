@@ -145,7 +145,6 @@ describe('Blood pressure measurement controller', function () {
         });
 
         it('should delete a measurement when correct id is given', function (done) {
-            var endpoint = 'measurement/bloodpressure';
 
             request(url)
                 .delete(endpoint)
