@@ -9,8 +9,6 @@ var BloodPressureMeasurements = models.BloodPressureMeasurements;
 
 /**
  * Returns the latest blood pressure measurements
- *
- * TODO: needs to be refined how much/what information we want to send
  */
 router.get('/', auth.isAuthenticated, (req, res) => {
     BloodPressureMeasurements
@@ -26,8 +24,6 @@ router.get('/', auth.isAuthenticated, (req, res) => {
 
 /**
  * Creates a measurement of blood pressure values
- *
- * TODO: Define the specific fields for every measurement
  */
 router.post('/', auth.isAuthenticated, (req, res) => {
     var measurement;

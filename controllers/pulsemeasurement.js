@@ -9,8 +9,6 @@ var PulseMeasurements = models.PulseMeasurements;
 
 /**
  * Returns the latest pulse measurements
- *
- * TODO: needs to be refined how much/what information we want to send
  */
 router.get('/', auth.isAuthenticated, (req, res) => {
     PulseMeasurements
@@ -26,8 +24,6 @@ router.get('/', auth.isAuthenticated, (req, res) => {
 
 /**
  * Creates a measurement of pulse values
- *
- * TODO: Define the specific fields for every measurement
  */
 router.post('/', auth.isAuthenticated, (req, res) => {
     // Build the measurement object

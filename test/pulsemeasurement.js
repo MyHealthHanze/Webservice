@@ -118,7 +118,7 @@ describe('Pulse measurement controller', function () {
                     done();
                 });
         });
-    })
+    });
 
     describe('DELETE /measurement/pulse:', function () {
         var endpoint = 'measurement/pulse';

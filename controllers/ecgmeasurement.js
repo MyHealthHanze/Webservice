@@ -9,8 +9,6 @@ var ECGMeasurements = models.ECGMeasurements;
 
 /**
  * Returns the latest ECG measurements
- *
- * TODO: needs to be refined how much/what information we want to send
  */
 router.get('/', auth.isAuthenticated, (req, res) => {
     ECGMeasurements
@@ -20,24 +18,29 @@ router.get('/', auth.isAuthenticated, (req, res) => {
             }
         })
         .then((measurements) => {
+            // Transform every measurementValue into a JSON object
+            measurements.forEach((entry) => {
+                entry.measurementValue = JSON.parse(entry.measurementValue);
+            });
+
             return response('', measurements, res);
         });
 });
 
 /**
  * Creates a measurement of ECG values
- *
- * TODO: Define the specific fields for every measurement
  */
 router.post('/', auth.isAuthenticated, (req, res) => {
-    // Set the userId to the current user
-    req.body.userId = req.user.id;
-    // Delete the id to prevent errors
-    req.body['id'] = undefined;
+    // Build the measurement object
+    var measurement = {
+        userId: req.user.id,
+        measurementValue: req.body.measurementValue,
+        measurementDate: req.body.measurementDate
+    };
 
     // Create the ECG measurement and return the inserted id
     ECGMeasurements
-        .create(req.body, {
+        .create(measurement, {
             plain: true,
             raw: true
         })

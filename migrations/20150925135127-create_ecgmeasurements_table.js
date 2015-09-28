@@ -19,6 +19,7 @@ module.exports = {
                     defaultValue: null
                 },
                 userId: Sequelize.INTEGER,
+                measurementValue: Sequelize.TEXT,
                 measurementDate: {
                     type: Sequelize.DATE,
                     defaultValue: null
