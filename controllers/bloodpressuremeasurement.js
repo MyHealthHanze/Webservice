@@ -30,14 +30,26 @@ router.get('/', auth.isAuthenticated, (req, res) => {
  * TODO: Define the specific fields for every measurement
  */
 router.post('/', auth.isAuthenticated, (req, res) => {
-    // Set the userId to the current user
-    req.body.userId = req.user.id;
-    // Delete the id to prevent errors
-    req.body['id'] = undefined;
+    var measurement;
+
+    try {
+        // Parse the measurementValue
+        var measurementValue = JSON.parse(req.body.measurementValue);
+
+        // Build the measurement object
+        measurement = {
+            userId: req.user.id,
+            systolicValue: measurementValue[0],
+            diastolicValue: measurementValue[1],
+            measurementDate: req.body.measurementDate
+        };
+    } catch (e) {
+        return response('Something went wrong, please try again!', '', res);
+    }
 
     // Create the blood pressure measurement and return the inserted id
     BloodPressureMeasurements
-        .create(req.body, {
+        .create(measurement, {
             plain: true,
             raw: true
         })

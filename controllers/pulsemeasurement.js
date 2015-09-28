@@ -30,14 +30,16 @@ router.get('/', auth.isAuthenticated, (req, res) => {
  * TODO: Define the specific fields for every measurement
  */
 router.post('/', auth.isAuthenticated, (req, res) => {
-    // Set the userId to the current user
-    req.body.userId = req.user.id;
-    // Delete the id to prevent errors
-    req.body['id'] = undefined;
+    // Build the measurement object
+    var measurement = {
+        userId: req.user.id,
+        measurementValue: req.body.measurementValue,
+        measurementDate: req.body.measurementDate
+    };
 
     // Create the pulse measurement and return the inserted id
     PulseMeasurements
-        .create(req.body, {
+        .create(measurement, {
             plain: true,
             raw: true
         })
