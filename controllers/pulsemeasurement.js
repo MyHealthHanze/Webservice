@@ -42,7 +42,13 @@ router.post('/', auth.isAuthenticated, (req, res) => {
             raw: true
         })
         .then((inserted) => {
-            return response('', inserted.id, res);
+            // Build an object with callback ids
+            var ids = {
+                local_id: req.body.local_id,
+                online_id: inserted.id
+            };
+
+            return response('', ids, res);
         });
 });
 

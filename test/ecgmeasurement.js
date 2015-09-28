@@ -138,7 +138,7 @@ describe('ECG measurement controller', function () {
                     }
 
                     // Check if the inserted id equals 4
-                    res.body.result.should.equal(4);
+                    (res.body.result.online_id).should.equal(4);
 
                     done2();
                 })
