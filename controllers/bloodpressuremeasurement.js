@@ -32,11 +32,17 @@ router.get('/', auth.isAuthenticated, (req, res) => {
 router.post('/', auth.isAuthenticated, (req, res) => {
     // Set the userId to the current user
     req.body.userId = req.user.id;
+    // Delete the id to prevent errors
+    req.body['id'] = undefined;
 
+    // Create the blood pressure measurement and return the inserted id
     BloodPressureMeasurements
-        .create(req.body)
-        .then(() => {
-            return response('', 'The blood pressure measurements have been uploaded.', res);
+        .create(req.body, {
+            plain: true,
+            raw: true
+        })
+        .then((inserted) => {
+            return response('', inserted.id, res);
         });
 });
 

@@ -7,7 +7,6 @@
  * @param statusCode
  * @returns {*}
  */
-
 var response = (error, result, res, statusCode = 401) => {
     // Make a success response
     if (error == '') {

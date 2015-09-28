@@ -7,9 +7,9 @@ var response = require('../helpers/response');
 
 var Users = models.Users;
 
-module.exports = {
+export default {
 
-    createToken: function (user) {
+    createToken: (user) => {
         var payload = {
             exp: moment().add(settings.tokenExpiresInMinutes, 'minutes').unix(),
             iat: moment().unix(),
@@ -19,7 +19,7 @@ module.exports = {
         return jwt.encode(payload, settings.secret);
     },
 
-    isAuthenticated: function (req, res, next) {
+    isAuthenticated: (req, res, next) => {
         // Check if the Authorization headers are set
         if (!(req.headers && req.headers.authorization))
             return response('You did not provide a JSON Web Token in the Authorization header.', '', res, 400);
