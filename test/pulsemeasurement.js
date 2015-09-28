@@ -71,6 +71,7 @@ describe('Pulse measurement controller', function () {
 
         before(function (done2) {
             var measurement = {
+                measurementValue: 1337,
                 measurementDate: '2015-09-27T11:52:16.000Z'
             };
 
@@ -125,6 +126,7 @@ describe('Pulse measurement controller', function () {
 
         before(function (done2) {
             var measurement = {
+                measurementValue: 1337,
                 measurementDate: '2015-09-27T11:52:16.000Z'
             };
 

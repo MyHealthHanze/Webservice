@@ -21,16 +21,10 @@ app.use(express.static(path.join(__dirname)));
 
 // Controllers
 import user from './controllers/user';
-import bloodpressure from './controllers/bloodpressuremeasurement';
-import ecg from './controllers/ecgmeasurement';
-import pulse from './controllers/pulsemeasurement';
 import measurement from './controllers/measurement';
 
 // Routing
 app.use(config.apiUrl + 'user', user);
-app.use(config.apiUrl + 'measurement/bloodpressure', bloodpressure);
-app.use(config.apiUrl + 'measurement/ecg', ecg);
-app.use(config.apiUrl + 'measurement/pulse', pulse);
 app.use(config.apiUrl + 'measurement', measurement);
 
 // Run the Express server
