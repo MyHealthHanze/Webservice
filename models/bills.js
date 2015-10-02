@@ -7,6 +7,12 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.ENUM,
             values: ['pending', 'payed']
         }
+    }, {
+        classMethods: {
+            associate: function (models) {
+                Bills.hasMany(models.Orders, {as: 'orders'});
+            }
+        }
     });
 
     return Bills;

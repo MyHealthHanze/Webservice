@@ -22,10 +22,12 @@ app.use(express.static(path.join(__dirname)));
 // Controllers
 import user from './controllers/user';
 import measurement from './controllers/measurement';
+import bills from './controllers/bills';
 
 // Routing
 app.use(config.apiUrl + 'user', user);
 app.use(config.apiUrl + 'measurement', measurement);
+app.use(config.apiUrl + 'bills', bills);
 
 // Run the Express server
 app.listen(app.get('port'), () =>
