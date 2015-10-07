@@ -1,6 +1,6 @@
 # Webservice
 
-Webservice made in Node.js for project MyHealth. The API is publicly accessible at [https://myhealth-hanze.herokuapp.com](https://myhealth-hanze.herokuapp.com)
+Webservice made with Node.js for project MyHealth.
 
 To see all the API endpoints, visit the wiki at [https://github.com/MyHealthHanze/Webservice/wiki/API-endpoints](https://github.com/MyHealthHanze/Webservice/wiki/API-endpoints)
 
